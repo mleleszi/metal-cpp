@@ -22,7 +22,7 @@
 
 - (void)drawInMTKView:(MTKView *)view
 {
-    renderer->render((__bridge CA::MetalDrawable *)view.currentDrawable);
+    renderer->render((__bridge CA::MetalDrawable *)view.currentDrawable, ((__bridge MTL::RenderPassDescriptor *)view.currentRenderPassDescriptor));
 }
 
 - (void)dealloc

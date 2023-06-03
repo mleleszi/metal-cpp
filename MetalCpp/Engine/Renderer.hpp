@@ -14,7 +14,7 @@
 class Renderer {
 public:
     Renderer(MTL::Device* const device);
-    void render(const CA::MetalDrawable* const pDrawable);
+    void render(const CA::MetalDrawable* const drawable, MTL::RenderPassDescriptor* renderPassDescriptor);
 private:
     MTL::Device* const device;
     std::unique_ptr<MTL::CommandQueue, void(*)(MTL::CommandQueue *)> commandQueue;

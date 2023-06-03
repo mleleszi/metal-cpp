@@ -18,6 +18,7 @@
 		B45EC0C52A2B292200CBCB25 /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B45EC0C32A2B292200CBCB25 /* Renderer.cpp */; };
 		B45EC0C72A2B295700CBCB25 /* RendererAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = B45EC0C62A2B295700CBCB25 /* RendererAdapter.mm */; };
 		B45EC0CA2A2B2A6A00CBCB25 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = B45EC0C92A2B2A6A00CBCB25 /* Shaders.metal */; };
+		B45EC0CD2A2B3F3F00CBCB25 /* GameView.m in Sources */ = {isa = PBXBuildFile; fileRef = B45EC0CC2A2B3F3F00CBCB25 /* GameView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,8 @@
 		B45EC0C62A2B295700CBCB25 /* RendererAdapter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RendererAdapter.mm; sourceTree = "<group>"; };
 		B45EC0C82A2B296800CBCB25 /* RendererAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RendererAdapter.h; sourceTree = "<group>"; };
 		B45EC0C92A2B2A6A00CBCB25 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		B45EC0CC2A2B3F3F00CBCB25 /* GameView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameView.m; sourceTree = "<group>"; };
+		B45EC0CE2A2B3F5500CBCB25 /* GameView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +101,8 @@
 				B45EC0C62A2B295700CBCB25 /* RendererAdapter.mm */,
 				B45EC0C82A2B296800CBCB25 /* RendererAdapter.h */,
 				B45EC0C92A2B2A6A00CBCB25 /* Shaders.metal */,
+				B45EC0CC2A2B3F3F00CBCB25 /* GameView.m */,
+				B45EC0CE2A2B3F5500CBCB25 /* GameView.h */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -192,6 +197,7 @@
 				B45EC0B42A2B28DD00CBCB25 /* main.m in Sources */,
 				B45EC0C72A2B295700CBCB25 /* RendererAdapter.mm in Sources */,
 				B45EC0AA2A2B28DD00CBCB25 /* AppDelegate.m in Sources */,
+				B45EC0CD2A2B3F3F00CBCB25 /* GameView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

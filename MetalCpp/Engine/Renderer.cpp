@@ -40,9 +40,7 @@ void Renderer::buildShaders() {
     }
 }
 
-void Renderer::render(const CA::MetalDrawable* const drawable) {
-    std::unique_ptr<MTL::RenderPassDescriptor, void(*)(MTL::RenderPassDescriptor* const)> renderPassDescriptor(MTL::RenderPassDescriptor::alloc()->init(), [](MTL::RenderPassDescriptor* const r) { r->release(); });
-    
+void Renderer::render(const CA::MetalDrawable* const drawable, MTL::RenderPassDescriptor* renderPassDescriptor) {
     renderPassDescriptor->colorAttachments()->object(0)->setTexture(drawable->texture());
     renderPassDescriptor->colorAttachments()->object(0)->setLoadAction(MTL::LoadActionClear);
     renderPassDescriptor->colorAttachments()->object(0)->setClearColor(MTL::ClearColor::Make(1.0, 0.0, 1.0, 1.0));
@@ -57,7 +55,7 @@ void Renderer::render(const CA::MetalDrawable* const drawable) {
     
     std::unique_ptr<MTL::Buffer, void(*)(MTL::Buffer* const)> vertexBuffer(device->newBuffer(vertexData.data(), sizeof(float) * vertexData.size(), MTL::ResourceStorageModeShared), [](MTL::Buffer* const b) { b->release(); });
     
-    MTL::RenderCommandEncoder* renderEncoder = commandBuffer->renderCommandEncoder(renderPassDescriptor.get());
+    MTL::RenderCommandEncoder* renderEncoder = commandBuffer->renderCommandEncoder(renderPassDescriptor);
     renderEncoder->setRenderPipelineState(renderPipelineState.get());
     renderEncoder->setVertexBuffer(vertexBuffer.get(), 0, 0);
     renderEncoder->drawPrimitives(MTL::PrimitiveTypeTriangle, NS::UInteger(0), NS::UInteger(3), NS::UInteger(1));
