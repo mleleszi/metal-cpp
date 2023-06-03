@@ -8,11 +8,8 @@
 #ifndef GameView_h
 #define GameView_h
 
-
-
-#import <MetalKit/MTKView.h>
+#import <MetalKit/MetalKit.h>
 #import "RendererAdapter.h"
-
 
 @interface GameView : MTKView
 

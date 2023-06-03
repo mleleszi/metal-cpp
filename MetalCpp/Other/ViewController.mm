@@ -17,11 +17,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    /*
     view = (MTKView *)self.view;
     view.device = MTLCreateSystemDefaultDevice();
     rendererAdapter = [[RendererAdapter alloc] initWithMTKView:view];
     view.delegate = rendererAdapter;
+     */
+    
+    self.view = [[GameView alloc] init];
 }
 
 @end
