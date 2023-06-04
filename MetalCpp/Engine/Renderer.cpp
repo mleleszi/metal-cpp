@@ -17,21 +17,35 @@
 Renderer::Renderer(MTL::Device* const device)
 : device(device),
 commandQueue(device->newCommandQueue(), [](MTL::CommandQueue* const q) { q->release(); }),
-renderPipelineState(nullptr, [](MTL::RenderPipelineState* const p) { p->release(); })
+renderPipelineState(nullptr, [](MTL::RenderPipelineState* const p) { p->release(); }),
+quad(device, 1)
 {
     buildShaders();
 }
 
 void Renderer::buildShaders() {
     const std::unique_ptr<MTL::Library, void(*)(MTL::Library* const)> defaultLibrary(device->newDefaultLibrary(), [](MTL::Library * const l) { l->release(); });
-    const std::unique_ptr<MTL::Function, void(*)(MTL::Function* const)> vertexFunction(defaultLibrary.get()->newFunction(NS::String::string("basic_vertex", NS::UTF8StringEncoding)), [](MTL::Function * const f) { f->release(); });
-    const std::unique_ptr<MTL::Function, void(*)(MTL::Function* const)> fragmentFunction(defaultLibrary.get()->newFunction(NS::String::string("basic_fragment", NS::UTF8StringEncoding)), [](MTL::Function* const f) { f->release(); });
+    const std::unique_ptr<MTL::Function, void(*)(MTL::Function* const)> vertexFunction(defaultLibrary.get()->newFunction(NS::String::string("vertex_main", NS::UTF8StringEncoding)), [](MTL::Function * const f) { f->release(); });
+    const std::unique_ptr<MTL::Function, void(*)(MTL::Function* const)> fragmentFunction(defaultLibrary.get()->newFunction(NS::String::string("fragment_main", NS::UTF8StringEncoding)), [](MTL::Function* const f) { f->release(); });
     
     const std::unique_ptr<MTL::RenderPipelineDescriptor, void(*)(MTL::RenderPipelineDescriptor * const)> pipelineStateDescriptor(MTL::RenderPipelineDescriptor::alloc()->init(), [](MTL::RenderPipelineDescriptor * const d) { d->release(); });
-    pipelineStateDescriptor.get()->setVertexFunction(vertexFunction.get());
-    pipelineStateDescriptor.get()->setFragmentFunction(fragmentFunction.get());
-    pipelineStateDescriptor.get()->colorAttachments()->object(0)->setPixelFormat(MTL::PixelFormatBGRA8Unorm);
+    pipelineStateDescriptor->setVertexFunction(vertexFunction.get());
+    pipelineStateDescriptor->setFragmentFunction(fragmentFunction.get());
+    pipelineStateDescriptor->colorAttachments()->object(0)->setPixelFormat(MTL::PixelFormatBGRA8Unorm);
     
+    const std::unique_ptr<MTL::VertexDescriptor, void(*)(MTL::VertexDescriptor* const)> vertexDescriptor(MTL::VertexDescriptor::alloc()->init(), [](MTL::VertexDescriptor* v) { v->release(); });
+    
+    vertexDescriptor->attributes()->object(0)->setFormat(MTL::VertexFormatFloat3);
+    vertexDescriptor->attributes()->object(0)->setOffset(0);
+    vertexDescriptor->attributes()->object(0)->setBufferIndex(0);
+    vertexDescriptor->layouts()->object(0)->setStride(sizeof(float) * 3);
+    
+    vertexDescriptor->attributes()->object(1)->setFormat(MTL::VertexFormatFloat3);
+    vertexDescriptor->attributes()->object(1)->setOffset(0);
+    vertexDescriptor->attributes()->object(1)->setBufferIndex(1);
+    vertexDescriptor->layouts()->object(1)->setStride(sizeof(simd::float3));
+    
+    pipelineStateDescriptor->setVertexDescriptor(vertexDescriptor.get());
     
     NS::Error* err {nullptr};
     renderPipelineState.reset(device->newRenderPipelineState(pipelineStateDescriptor.get(), &err));
@@ -43,22 +57,25 @@ void Renderer::buildShaders() {
 void Renderer::render(const CA::MetalDrawable* const drawable, MTL::RenderPassDescriptor* renderPassDescriptor) {
     renderPassDescriptor->colorAttachments()->object(0)->setTexture(drawable->texture());
     renderPassDescriptor->colorAttachments()->object(0)->setLoadAction(MTL::LoadActionClear);
-    renderPassDescriptor->colorAttachments()->object(0)->setClearColor(MTL::ClearColor::Make(1.0, 0.0, 1.0, 1.0));
+    renderPassDescriptor->colorAttachments()->object(0)->setClearColor(MTL::ClearColor::Make(1.0, 1.0, 0.8, 1.0));
     
     MTL::CommandBuffer* commandBuffer = commandQueue->commandBuffer();
-    
-    const std::vector<float> vertexData = {
-        0.0, 0.5, 0.0,
-        -1.0, -0.5, 0.0,
-        1.0, -0.5, 0.0
-    };
-    
-    std::unique_ptr<MTL::Buffer, void(*)(MTL::Buffer* const)> vertexBuffer(device->newBuffer(vertexData.data(), sizeof(float) * vertexData.size(), MTL::ResourceStorageModeShared), [](MTL::Buffer* const b) { b->release(); });
-    
     MTL::RenderCommandEncoder* renderEncoder = commandBuffer->renderCommandEncoder(renderPassDescriptor);
+
+    
+    timer += 0.05;
+    float currentTime = std::sin(timer);
+    
+    renderEncoder->setVertexBytes(&currentTime, sizeof(float), 11);
+
     renderEncoder->setRenderPipelineState(renderPipelineState.get());
-    renderEncoder->setVertexBuffer(vertexBuffer.get(), 0, 0);
-    renderEncoder->drawPrimitives(MTL::PrimitiveTypeTriangle, NS::UInteger(0), NS::UInteger(3), NS::UInteger(1));
+    
+    
+    renderEncoder->setVertexBuffer(quad.vertexBuffer.get(), 0, 0);
+    renderEncoder->setVertexBuffer(quad.colorBuffer.get(), 0, 1);
+    
+    renderEncoder->drawIndexedPrimitives(MTL::PrimitiveTypePoint, quad.indicies.size(), MTL::IndexTypeUInt16, quad.indexBuffer.get(), 0);
+    
     renderEncoder->endEncoding();
     
     commandBuffer->presentDrawable(drawable);

@@ -7,9 +7,12 @@
 
 #pragma once
 
-#include <memory>
 #include <Metal/Metal.hpp>
 #include <QuartzCore/CAMetalDrawable.hpp>
+#include <memory>
+#include <cmath>
+
+#include "Quad.hpp"
 
 class Renderer {
 public:
@@ -19,6 +22,9 @@ private:
     MTL::Device* const device;
     std::unique_ptr<MTL::CommandQueue, void(*)(MTL::CommandQueue *)> commandQueue;
     std::unique_ptr<MTL::RenderPipelineState, void(*)(MTL::RenderPipelineState *)> renderPipelineState;
+    
+    float timer = 0;
+    Quad quad;
     
     void buildShaders();
 };

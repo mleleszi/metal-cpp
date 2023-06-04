@@ -19,6 +19,7 @@
 		B45EC0CA2A2B2A6A00CBCB25 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = B45EC0C92A2B2A6A00CBCB25 /* Shaders.metal */; };
 		B45EC0D82A2B547500CBCB25 /* GameView.mm in Sources */ = {isa = PBXBuildFile; fileRef = B45EC0D72A2B547500CBCB25 /* GameView.mm */; };
 		B45EC0DB2A2B55C700CBCB25 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45EC0DA2A2B55C700CBCB25 /* MetalKit.framework */; };
+		B45EC0E32A2B692700CBCB25 /* Quad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B45EC0E12A2B692700CBCB25 /* Quad.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,8 @@
 		B45EC0D72A2B547500CBCB25 /* GameView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = GameView.mm; path = ../Other/GameView.mm; sourceTree = "<group>"; };
 		B45EC0D92A2B548900CBCB25 /* GameView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GameView.h; path = ../Other/GameView.h; sourceTree = "<group>"; };
 		B45EC0DA2A2B55C700CBCB25 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		B45EC0E12A2B692700CBCB25 /* Quad.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Quad.cpp; sourceTree = "<group>"; };
+		B45EC0E22A2B692700CBCB25 /* Quad.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Quad.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +80,8 @@
 		B45EC0A72A2B28DD00CBCB25 /* MetalCpp */ = {
 			isa = PBXGroup;
 			children = (
+				B45EC0DD2A2B638800CBCB25 /* Shaders */,
+				B45EC0DC2A2B637A00CBCB25 /* Geometry */,
 				B45EC0CB2A2B3BDA00CBCB25 /* Other */,
 				B45EC0C22A2B291300CBCB25 /* Engine */,
 			);
@@ -103,7 +108,6 @@
 				B45EC0C42A2B292200CBCB25 /* Renderer.hpp */,
 				B45EC0C62A2B295700CBCB25 /* RendererAdapter.mm */,
 				B45EC0C82A2B296800CBCB25 /* RendererAdapter.h */,
-				B45EC0C92A2B2A6A00CBCB25 /* Shaders.metal */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -119,6 +123,23 @@
 				B45EC0B52A2B28DD00CBCB25 /* MetalCpp.entitlements */,
 			);
 			path = Other;
+			sourceTree = "<group>";
+		};
+		B45EC0DC2A2B637A00CBCB25 /* Geometry */ = {
+			isa = PBXGroup;
+			children = (
+				B45EC0E12A2B692700CBCB25 /* Quad.cpp */,
+				B45EC0E22A2B692700CBCB25 /* Quad.hpp */,
+			);
+			path = Geometry;
+			sourceTree = "<group>";
+		};
+		B45EC0DD2A2B638800CBCB25 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				B45EC0C92A2B2A6A00CBCB25 /* Shaders.metal */,
+			);
+			path = Shaders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,6 +215,7 @@
 				B45EC0CA2A2B2A6A00CBCB25 /* Shaders.metal in Sources */,
 				B45EC0C52A2B292200CBCB25 /* Renderer.cpp in Sources */,
 				B45EC0B42A2B28DD00CBCB25 /* main.m in Sources */,
+				B45EC0E32A2B692700CBCB25 /* Quad.cpp in Sources */,
 				B45EC0C72A2B295700CBCB25 /* RendererAdapter.mm in Sources */,
 				B45EC0AA2A2B28DD00CBCB25 /* AppDelegate.m in Sources */,
 				B45EC0D82A2B547500CBCB25 /* GameView.mm in Sources */,
